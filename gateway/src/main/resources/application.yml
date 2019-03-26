@@ -1,0 +1,28 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: service-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: requestratelimiter_route
+          uri: lb://service-product
+          predicates:
+            - Path=/hello/*
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 1
+                key-resolver: "#{@remoteAddrKeyResolver}"
+    consul:
+      host: localhost
+      port: 8500
+  redis:
+    host: localhost
+    password:
+    port: 6379
