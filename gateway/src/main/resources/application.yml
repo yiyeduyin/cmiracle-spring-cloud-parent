@@ -9,20 +9,14 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: requestratelimiter_route
+        - id: host_route
           uri: lb://service-product
           predicates:
-            - Path=/hello/*
-          filters:
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 1
-                redis-rate-limiter.burstCapacity: 1
-                key-resolver: "#{@remoteAddrKeyResolver}"
-    consul:
-      host: localhost
-      port: 8500
-  redis:
-    host: localhost
-    password:
-    port: 6379
+            - Path=/product/*
+        - id: host_route
+          uri: lb://service-user
+          predicates:
+            - Path=/user/*
+    nacos:
+      discovery:
+        server-addr: localhost:8848
