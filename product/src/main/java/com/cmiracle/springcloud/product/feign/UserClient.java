@@ -1,12 +1,12 @@
 package com.cmiracle.springcloud.product.feign;
 
+import com.cmiracle.user.service.UserService;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Component;
 
+@Component
 @FeignClient("service-user")
-public interface UserClient {
+public interface UserClient extends UserService {
 
-    @GetMapping("/user/get")
-    String hello(@RequestParam(name = "name") String name);
+
 }

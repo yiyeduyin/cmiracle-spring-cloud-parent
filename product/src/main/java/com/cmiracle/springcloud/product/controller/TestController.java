@@ -15,8 +15,13 @@ public class TestController {
     private UserClient userClient;
 
     @GetMapping("/get")
-    public String hello(@RequestParam String name){
-        return userClient.hello(name);
+    public String getUser(@RequestParam String name){
+        return userClient.getUser(name);
+    }
+
+    @GetMapping("/update")
+    public String updateUser(@RequestParam String name){
+        return userClient.updateUser(name);
     }
 
 }
