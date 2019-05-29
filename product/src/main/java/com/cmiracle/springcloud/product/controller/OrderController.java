@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/product")
-public class TestController {
+@RequestMapping("/order")
+public class OrderController {
 
     @Autowired
     private UserClient userClient;

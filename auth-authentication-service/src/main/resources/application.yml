@@ -1,0 +1,16 @@
+server:
+  port: 8512
+spring:
+  application:
+    name: auth-authentication-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/cmiracle-spring-cloud
+    username: root
+    password: Root!123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      test-while-idle: true
+      min-idle: 10
+      max-wait: 18000
+      max-active: 200
