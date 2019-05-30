@@ -1,4 +1,4 @@
-package com.cmiracle.authtest.config;
+package com.cmiracle.authauthenticationservice.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

@@ -14,3 +14,6 @@ spring:
       min-idle: 10
       max-wait: 18000
       max-active: 200
+jwt:
+  signkey: 2WAsbgZrWPO9qIOl71VhHhAZIh2Pzxv4
+  isskey: 5WB1gEXa6H35lGskhVscT9urE3cqx1pS
