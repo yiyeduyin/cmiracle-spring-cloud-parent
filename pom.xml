@@ -37,5 +37,6 @@
         <module>gateway</module>
         <module>product</module>
         <module>user</module>
+        <module>common-util</module>
     </modules>
 </project>
