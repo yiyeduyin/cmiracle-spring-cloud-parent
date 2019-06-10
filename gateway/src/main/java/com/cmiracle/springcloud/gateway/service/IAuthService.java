@@ -1,7 +1,7 @@
 package com.cmiracle.springcloud.gateway.service;
 
 import com.cmiracle.springcloud.commonutil.dao.Result;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
+import org.springframework.security.jwt.Jwt;
 
 /**
  * @Authoor: cmiracle
@@ -61,5 +61,5 @@ public interface IAuthService {
      * @param authentication 认证信息  Authorization: bearer header.payload.signature
      * @return Jwt对象
      */
-    OAuth2ResourceServerProperties.Jwt getJwt(String authentication);
+    Jwt getJwt(String authentication);
 }

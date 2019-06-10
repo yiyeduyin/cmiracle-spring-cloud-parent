@@ -53,7 +53,7 @@ public class AccessGatewayFilter implements GlobalFilter {
             //TODO 转发的请求都加上服务间认证token
             builder.header(X_CLIENT_TOKEN, "TODO zhoutaoo添加服务间简单认证");
             //将jwt token中的用户信息传给服务
-//            builder.header(X_CLIENT_TOKEN_USER, authService.getJwt(authentication).getClaims());
+            builder.header(X_CLIENT_TOKEN_USER, authService.getJwt(authentication).getClaims());
             return chain.filter(exchange.mutate().request(builder.build()).build());
         }
         return unauthorized(exchange);
