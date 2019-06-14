@@ -13,6 +13,10 @@ spring:
           enabled: true
       routes:
         - id: host_route
+          uri: lb://service-auth-authentication
+          predicates:
+            - Path=/oauth/*
+        - id: host_route
           uri: lb://service-product
           predicates:
             - Path=/product/*
@@ -24,6 +28,3 @@ spring:
       discovery:
         server-addr: localhost:8848
         enabled: true
-jwt:
-  signkey: 2WAsbgZrWPO9qIOl71VhHhAZIh2Pzxv4
-  isskey: 5WB1gEXa6H35lGskhVscT9urE3cqx1pS

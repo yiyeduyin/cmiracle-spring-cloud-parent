@@ -1,5 +1,7 @@
 package com.cmiracle.springcloud.gateway.filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -17,20 +19,24 @@ import reactor.core.publisher.Mono;
 @Component
 public class AccessLoginFilter implements GlobalFilter, Ordered {
 
-    private String loginUrl = "/system/auth/login";
+    private final Logger log = LoggerFactory.getLogger(AccessLoginFilter.class);
+
+    private String loginUrl = "/oauth/login";
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        System.out.println("into AccessLoginFilter");
+        log.info("into AccessLoginFilter");
 
         ServerHttpRequest request = exchange.getRequest();
         String authentication = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         String method = request.getMethodValue();
         String url = request.getPath().value().trim();
 
+        log.info("url = {}, method = {}", url, method);
+
         //登录请求则调用oauth授权服务
         if(loginUrl.equals(url)){
-            System.out.println("AccessLoginFilter go to login");
+            log.info("AccessLoginFilter go to login");
         }
         return chain.filter(exchange);
     }
