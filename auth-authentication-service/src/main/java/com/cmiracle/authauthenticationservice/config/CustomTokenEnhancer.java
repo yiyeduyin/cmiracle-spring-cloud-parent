@@ -18,7 +18,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        CustomUser userDetails = (CustomUser) authentication.getPrincipal();
         Map<String, Object> more = new HashMap<>();
         more.put("is_admin", userDetails.isAdmin());
         more.put("ent_code", userDetails.getEntCode());

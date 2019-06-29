@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        CustomUserDetails user = this.findByUsername(s);
+        CustomUser user = this.findByUsername(s);
         if (Objects.isNull(user)) {
             throw new UsernameNotFoundException("");
         }
@@ -28,9 +28,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
 
-    private CustomUserDetails findByUsername(String username) {
-        List<CustomUserDetails> userList = jdbcTemplate.query("select * from users where username=?", preparedStatement -> preparedStatement.setString(1, username), (resultSet, i) -> {
-            CustomUserDetails user = null;
+    private CustomUser findByUsername(String username) {
+        List<CustomUser> userList = jdbcTemplate.query("select * from users where username=?", preparedStatement -> preparedStatement.setString(1, username), (resultSet, i) -> {
+            CustomUser user = null;
             String password = resultSet.getString("password");
             Integer enabled = resultSet.getInt("enabled");
             String entCode = resultSet.getString("ent_code");
@@ -47,7 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     }
                     simpleGrantedAuthority = new SimpleGrantedAuthority("USER");
                 }
-                user = new CustomUserDetails(username, password, true, true, true, true, Arrays.asList(simpleGrantedAuthority));
+                user = new CustomUser(username, password, true, true, true, true, Arrays.asList(simpleGrantedAuthority));
                 user.setEntCode(entCode);
                 user.setAdmin(adminRole);
             }

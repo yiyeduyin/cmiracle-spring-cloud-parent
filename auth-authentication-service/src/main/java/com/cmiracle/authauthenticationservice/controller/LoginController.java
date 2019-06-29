@@ -1,8 +1,11 @@
 package com.cmiracle.authauthenticationservice.controller;
 
-import com.cmiracle.authauthenticationservice.feign.OauthService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordAccessTokenProvider;
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,14 +14,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    @Autowired
-    private OauthService oauthService;
+    @Value("${server.port}")
+    private Integer port;
+
+    @Value("${security.oauth2.client.client-id}")
+    private String clientId;
+
+    @Value("${security.oauth2.client.client-secret}")
+    private String clientSecret;
 
     @GetMapping("/oauth/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
+    public OAuth2AccessToken loginTemplate(@RequestParam String username, @RequestParam String password) {
         log.info("into LoginController login");
-        String token = oauthService.login(username, password, "password");
-        log.info("LoginController login token = {}", token);
-        return "hello " + token;
+        ResourceOwnerPasswordResourceDetails resource = new ResourceOwnerPasswordResourceDetails();
+        resource.setAccessTokenUri(getLocalhostService() + "/oauth/token");
+        resource.setClientId(clientId);
+        resource.setClientSecret(clientSecret);
+        resource.setGrantType("password");
+        resource.setUsername(username);
+        resource.setPassword(password);
+        OAuth2RestTemplate template = new OAuth2RestTemplate(resource);
+        template.setAccessTokenProvider(new ResourceOwnerPasswordAccessTokenProvider());
+        OAuth2AccessToken accessToken = template.getAccessToken();
+        log.info("LoginController login token = {}", accessToken);
+        return accessToken;
+    }
+
+    private String getLocalhostService() {
+        return "http://localhost:" + port;
     }
 }
