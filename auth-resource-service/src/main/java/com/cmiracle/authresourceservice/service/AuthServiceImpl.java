@@ -45,13 +45,6 @@ public class AuthServiceImpl implements AuthService{
         return invalid;
     }
 
-    /**
-     * 验证服务
-     */
-    public void invalidService(){
-
-    }
-
     public Jwt getJwt(String authentication) {
         return JwtHelper.decode(authentication);
     }

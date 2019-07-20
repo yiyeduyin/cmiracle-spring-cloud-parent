@@ -1,5 +1,0 @@
-server:
-  port: 8513
-spring:
-  application:
-    name: auth-test-service
