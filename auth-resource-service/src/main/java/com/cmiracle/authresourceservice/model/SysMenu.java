@@ -1,10 +1,9 @@
 package com.cmiracle.authresourceservice.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
 
 @Table(name = "sys_menu")
-public class SysMenu implements Serializable {
+public class SysMenu {
     @Id
     @Column(name = "id")
     private Long id;
@@ -26,8 +25,6 @@ public class SysMenu implements Serializable {
      */
     @Column(name = "level")
     private Integer level;
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * @return id
@@ -76,7 +73,7 @@ public class SysMenu implements Serializable {
      * @param name 名称
      */
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     /**
@@ -95,34 +92,5 @@ public class SysMenu implements Serializable {
      */
     public void setLevel(Integer level) {
         this.level = level;
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        SysMenu other = (SysMenu) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getParentId() == null ? other.getParentId() == null : this.getParentId().equals(other.getParentId()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getLevel() == null ? other.getLevel() == null : this.getLevel().equals(other.getLevel()));
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getParentId() == null) ? 0 : getParentId().hashCode());
-        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getLevel() == null) ? 0 : getLevel().hashCode());
-        return result;
     }
 }

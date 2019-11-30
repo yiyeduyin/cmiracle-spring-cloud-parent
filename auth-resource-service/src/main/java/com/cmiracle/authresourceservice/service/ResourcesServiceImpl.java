@@ -1,6 +1,5 @@
 package com.cmiracle.authresourceservice.service;
 
-import com.cmiracle.authresourceservice.model.SysResource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,4 @@ import java.util.List;
 @Service
 public class ResourcesServiceImpl implements ResourcesService {
 
-    @Override
-    public List<SysResource> getResources() {
-        return null;
-    }
 }

@@ -1,15 +1,12 @@
 package com.cmiracle.authresourceservice.service;
 
 import com.cmiracle.authresourceservice.mapper.*;
-import com.cmiracle.authresourceservice.model.SysMenu;
-import com.cmiracle.authresourceservice.model.SysRoleMenuRelation;
-import com.cmiracle.authresourceservice.model.SysUser;
-import com.cmiracle.authresourceservice.model.SysUserRoleRelation;
+import com.cmiracle.authresourceservice.model.*;
 import com.cmiracle.springcloud.commonutil.constant.ResultCode;
 import com.cmiracle.springcloud.commonutil.exception.ServiceException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +18,7 @@ import java.util.stream.Collectors;
  * @Date: 2019/7/20 15 51
  * @Description:
  */
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -66,27 +64,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<SysMenu> getUserMenus(Long id) {
+        log.info("into getUserMenus");
+
         SysUser sysUser = sysUserMapper.selectByPrimaryKey(id);
         if(sysUser == null){
             throw new ServiceException(ResultCode.NOT_FOUND);
         }
-        Example example = new Example(SysUserRoleRelation.class);
-        example.createCriteria().andEqualTo("userId", id);
-        List<SysUserRoleRelation> sysUserRoleRelations = sysUserRoleRelationMapper.selectByExample(example);
+        SysUserRoleRelationExample sysUserRoleRelationExample = new SysUserRoleRelationExample();
+        sysUserRoleRelationExample.createCriteria().andIdEqualTo(id);
+        List<SysUserRoleRelation> sysUserRoleRelations = sysUserRoleRelationMapper.selectByExample(sysUserRoleRelationExample);
         List<Long> roleIds = sysUserRoleRelations.stream().map(s -> s.getRoleId()).collect(Collectors.toList());
 
-        Example roleMenuExample = new Example(SysRoleMenuRelation.class);
-        roleMenuExample.createCriteria().andIn("roleId", roleIds);
+        SysRoleMenuRelationExample roleMenuExample = new SysRoleMenuRelationExample();
+        roleMenuExample.createCriteria().andRoleIdIn(roleIds);
         List<SysRoleMenuRelation> sysRoleMenuRelations = sysRoleMenuRelationMapper.selectByExample(roleMenuExample);
         List<Long> menuIds = sysRoleMenuRelations.stream().map(s -> s.getMenuId()).collect(Collectors.toList());
 
-        Example menuExample = new Example(SysRoleMenuRelation.class);
-        menuExample.createCriteria().andIn("id", menuIds);
+        SysMenuExample menuExample = new SysMenuExample();
+        menuExample.createCriteria().andIdIn(menuIds);
         List<SysMenu> sysMenus = sysMenuMapper.selectByExample(menuExample);
-
-
-
-
         return sysMenus;
     }
 

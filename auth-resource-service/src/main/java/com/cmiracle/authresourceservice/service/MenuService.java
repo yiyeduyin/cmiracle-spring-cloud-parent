@@ -7,5 +7,4 @@ package com.cmiracle.authresourceservice.service;
  */
 public interface MenuService {
 
-    void getMenus();
 }

@@ -10,8 +10,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class MenuServiceImpl implements MenuService {
 
-    @Override
-    public void getMenus() {
-
-    }
 }

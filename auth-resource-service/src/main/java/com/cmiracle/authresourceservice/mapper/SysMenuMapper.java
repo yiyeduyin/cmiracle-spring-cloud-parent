@@ -2,13 +2,10 @@ package com.cmiracle.authresourceservice.mapper;
 
 import com.cmiracle.authresourceservice.model.SysMenu;
 import com.cmiracle.authresourceservice.model.SysMenuExample;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
-import java.util.List;
-
-@Repository
 public interface SysMenuMapper extends Mapper<SysMenu> {
     long countByExample(SysMenuExample example);
 

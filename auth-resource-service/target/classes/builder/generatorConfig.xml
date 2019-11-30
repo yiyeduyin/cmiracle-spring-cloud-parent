@@ -8,8 +8,9 @@
     <!--代码生成请执行： mvn mybatis-generator:generate  -P generate -Dmaven.test.skip=true -->
 
     <context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
-        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+        <property name="autoDelimitKeywords" value="true" />
+        <property name="beginningDelimiter" value="`" />
+        <property name="endingDelimiter" value="`" />
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
             <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
             <property name="forceAnnotation" value="true"/>
@@ -26,15 +27,12 @@
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.cmiracle.authresourceservice.model"
-                            targetProject="src/main/java">
-            <property name="enableSubPackages" value="true"/>
-            <property name="trimStrings" value="true"/>
-        </javaModelGenerator>
+        <javaModelGenerator targetPackage="${targetModelPackage}.model" targetProject="${targetJavaProject}"/>
 
-        <sqlMapGenerator targetPackage="com.cmiracle.authresourceservice" targetProject="${basedir}/src/main/resources"/>
-        <javaClientGenerator targetPackage="com.cmiracle.authresourceservice.mapper" targetProject="src/main/java"
-                             type="XMLMAPPER"/>
+        <sqlMapGenerator targetPackage="${targetXMLPackage}" targetProject="${targetResourcesProject}"/>
+
+        <javaClientGenerator targetPackage="${targetMapperPackage}.mapper" targetProject="${targetJavaProject}"
+                             type="MIXEDMAPPER"/>
 
         <table tableName="sys_%"></table>
 

@@ -9,6 +9,16 @@
     </parent>
     <artifactId>auth-resource-service</artifactId>
 
+    <properties>
+        <!--mybatis生成器-->
+        <targetJavaProject>${basedir}/src/main/java</targetJavaProject>
+        <targetMapperPackage>com.cmiracle.authresourceservice</targetMapperPackage>
+        <targetModelPackage>com.cmiracle.authresourceservice</targetModelPackage>
+        <!-- XML生成路径 -->
+        <targetResourcesProject>${basedir}/src/main/resources</targetResourcesProject>
+        <targetXMLPackage>mapper</targetXMLPackage>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.cmiracle</groupId>
