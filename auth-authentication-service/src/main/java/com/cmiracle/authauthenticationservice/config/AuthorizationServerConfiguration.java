@@ -54,7 +54,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer, accessTokenConverter()));
         endpoints.tokenStore(tokenStore())
                 .tokenEnhancer(tokenEnhancerChain)
-                .authenticationManager(authenticationManager).accessTokenConverter(accessTokenConverter())
+                .authenticationManager(authenticationManager)
+                .accessTokenConverter(accessTokenConverter())
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)  //支持GET  POST  请求获取token
                 .userDetailsService(userDetailsService) //必须注入userDetailsService否则根据refresh_token无法加载用户信息
                 .reuseRefreshTokens(true);  //开启刷新token
