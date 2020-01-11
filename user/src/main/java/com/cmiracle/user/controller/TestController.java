@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "【管理端：测试管理】", description = "测试管理")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class TestController {
 
     @ApiOperation(value = "管理端：测试获取")

@@ -3,9 +3,6 @@ server:
 spring:
   application:
     name: service-gateway
-  redis:
-      host: localhost
-      port: 6379
   cloud:
     gateway:
       discovery:
@@ -13,18 +10,30 @@ spring:
           enabled: true
       routes:
         - id: host_route
-          uri: lb://service-auth-authentication
-          predicates:
-            - Path=/oauth/*
-        - id: host_route
-          uri: lb://service-product
-          predicates:
-            - Path=/product/*
-        - id: host_route
           uri: lb://service-user
           predicates:
-            - Path=/user/*
+            - Path=/api/user/*
     nacos:
       discovery:
         server-addr: localhost:8848
         enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: gateway
+            client-secret: b6d1cca4-b1e0-472e-8c3f-5158e0a6e063
+            authorization-grant-type: authorization_code
+            redirectUri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            scope:
+            - openid
+            - profile
+            - email
+        provider:
+          keycloak:
+            authorization-uri: http://localhost:8849/auth/realms/cmiracle/protocol/openid-connect/auth
+            token-uri: http://localhost:8849/auth/realms/cmiracle/protocol/openid-connect/token
+            user-info-uri: http://localhost:8849/auth/realms/cmiracle/protocol/openid-connect/userinfo
+            jwk-set-uri: http://localhost:8849/auth/realms/cmiracle/protocol/openid-connect/certs
+            user-name-attribute: preferred_username
